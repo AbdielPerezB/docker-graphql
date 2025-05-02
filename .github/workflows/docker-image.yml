@@ -12,8 +12,8 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
+    steps: #Pasos a seguir
+    - name: Checkout code #Revisa el código que tenemos en nuesro repositorio
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -21,10 +21,16 @@ jobs:
       env:
         DOCKER_USER: ${{secrets.DOCKER_ABDIEL_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_TOKEN}}
-      run: |
+      run: | #Este caracter sierve para indicar que todas las siguientes lineas son comandos separados a ejecutar
         echo "Iniciando login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin del login"
+    - name: Build Docker Image
+      run: |
+        docker build -t abdielperezb/docker-graphql:0.0.1 .
+    - name: Push Docker Image
+      run: |
+        docker push abdielperezb/docker-graphql:0.0.1
         
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
