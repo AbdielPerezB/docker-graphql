@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Automatic Version
+    - name: Version
       uses: paulhatch/semantic-version@v4.0.2
       with:
         major_pattern: "major:"
@@ -39,7 +39,7 @@ jobs:
         docker build -t abdielperezb/docker-graphql:latest
     - name: Push Docker Image
       env:
-        NEW_VERSION: ${{steps.verision.outputs.version}}
+        NEW_VERSION: ${{steps.version.outputs.version}}
       run: |
         docker push abdielperezb/docker-graphql:$NEW_VERSION
         docker push abdielperezb/docker-graphql:latest
